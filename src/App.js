@@ -2,6 +2,9 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AllPosts from './components/AllPosts';
+import Login from './components/Login';
+import NewPost from './components/NewPost';
 
 const App = () => {
     const [posts, setPosts] = useState([{}, {}]);
@@ -21,12 +24,19 @@ const App = () => {
     }, []);
 
     return (
-        <div className="App">
-            <header className="App-header"></header>
-            <h1>Blog CMS</h1>
-            {posts.map((post) => {
-                return <p>{post.title}</p>;
-            })}
+        <div>
+            <BrowserRouter>
+                {/* <Header count={cartCount} /> */}
+                <Routes>
+                    {<Route exact path="/" element={<Login />} />}
+                    <Route
+                        path="/posts/"
+                        element={<AllPosts posts={posts} />}
+                    />
+                    <Route path="/posts/new/" element={<NewPost />} />
+                </Routes>
+                {/* <Footer /> */}
+            </BrowserRouter>
         </div>
     );
 };
