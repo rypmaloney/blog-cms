@@ -8,8 +8,49 @@ import NewPost from './components/NewPost';
 
 const App = () => {
     const [posts, setPosts] = useState([{}, {}]);
+
+    //Login stuff
     const [username, setUsername] = useState('');
-    const [isLoggedIn, setLoggedIn] = useState(false);
+    const [password, setPassword] = useState('');
+    const [isLoggedIn, setLoggedIn] = useState(
+        localStorage.getItem('isLoggedIn')
+    );
+    const [token, setToken] = useState(localStorage.getItem('token'));
+    const [message, setMessage] = useState('');
+
+    const handleSubmitLogIn = async (e) => {
+        e.preventDefault();
+        setUsername(e.target.username.value);
+        setPassword(e.target.password.value);
+
+        try {
+            let res = await fetch('http://localhost:3000/admin/log-in/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    username: `${username}`,
+                    password: `${password}`,
+                }),
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            let resJson = await res.json();
+
+            if (res.status !== 200) {
+                setMessage('Some error occured');
+                console.log(res);
+                return;
+            }
+            setLoggedIn(true);
+            setMessage('Logged in');
+            console.log(resJson.token);
+            localStorage.setItem('token', resJson.token);
+            localStorage.setItem('isLoggedIn', true);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     useEffect(() => {
         const getPosts = async () => {
@@ -30,7 +71,20 @@ const App = () => {
             <BrowserRouter>
                 {/* <Header count={cartCount} /> */}
                 <Routes>
-                    {<Route exact path='/' element={<Login />} />}
+                    {
+                        <Route
+                            exact
+                            path='/'
+                            element={
+                                <Login
+                                    handleSubmitLogIn={handleSubmitLogIn}
+                                    message={message}
+                                    setUsername={setUsername}
+                                    setPassword={setPassword}
+                                />
+                            }
+                        />
+                    }
                     <Route
                         path='/posts/'
                         element={
