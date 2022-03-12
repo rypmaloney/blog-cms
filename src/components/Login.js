@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 const Login = () => {
     return (
         <div>
-            <h1> Log In </h1>
+            <h1>Log In</h1>
         </div>
     );
 };
