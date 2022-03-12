@@ -8,6 +8,8 @@ import NewPost from './components/NewPost';
 
 const App = () => {
     const [posts, setPosts] = useState([{}, {}]);
+    const [username, setUsername] = useState('');
+    const [isLoggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
         const getPosts = async () => {
@@ -28,12 +30,14 @@ const App = () => {
             <BrowserRouter>
                 {/* <Header count={cartCount} /> */}
                 <Routes>
-                    {<Route exact path="/" element={<Login />} />}
+                    {<Route exact path='/' element={<Login />} />}
                     <Route
-                        path="/posts/"
-                        element={<AllPosts posts={posts} />}
+                        path='/posts/'
+                        element={
+                            <AllPosts posts={posts} isLoggedIn={isLoggedIn} />
+                        }
                     />
-                    <Route path="/posts/new/" element={<NewPost />} />
+                    <Route path='/posts/new/' element={<NewPost />} />
                 </Routes>
                 {/* <Footer /> */}
             </BrowserRouter>

@@ -4,12 +4,27 @@ import Post from './Post';
 import uniqid from 'uniqid';
 
 const AllPosts = (props) => {
-    const { posts } = props;
+    const { posts, isLoggedIn } = props;
+
+    function PostPageConditions(props) {
+        const isLoggedIn = props.isLoggedIn;
+
+        if (isLoggedIn === true) {
+            return (
+                <div>
+                    {posts.map((post) => {
+                        return <Post post={post} key={uniqid()} />;
+                    })}
+                </div>
+            );
+        } else {
+            return <p>Please, log in to edit and create posts.</p>;
+        }
+    }
+
     return (
         <div>
-            {posts.map((post) => {
-                return <Post post={post} key={uniqid()} />;
-            })}
+            <PostPageConditions isLoggedIn={isLoggedIn} />
         </div>
     );
 };
