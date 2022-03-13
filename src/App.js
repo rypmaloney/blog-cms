@@ -5,6 +5,7 @@ import axios from 'axios';
 import AllPosts from './components/AllPosts';
 import Login from './components/Login';
 import NewPost from './components/NewPost';
+import SignUp from './components/SignUp';
 
 const App = () => {
     const [posts, setPosts] = useState([{}, {}]);
@@ -53,6 +54,20 @@ const App = () => {
                             }
                         />
                     }
+                    <Route
+                        exact
+                        path='/sign-up/'
+                        element={
+                            <SignUp
+                                setUsername={setUsername}
+                                setPassword={setPassword}
+                                username={username}
+                                password={password}
+                                isLoggedIn={isLoggedIn}
+                                setLoggedIn={setLoggedIn}
+                            />
+                        }
+                    />
                     <Route
                         path='/posts/'
                         element={
