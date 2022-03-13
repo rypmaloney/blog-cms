@@ -5,11 +5,11 @@ import uniqid from 'uniqid';
 
 const AllPosts = (props) => {
     const { posts, isLoggedIn } = props;
-    let currentLogStatus = localStorage.getItem('isLoggedIn');
+
     function PostPageConditions(props) {
         const isLoggedIn = props.isLoggedIn;
 
-        if (currentLogStatus) {
+        if (isLoggedIn) {
             return (
                 <div>
                     {posts.map((post) => {
@@ -24,10 +24,7 @@ const AllPosts = (props) => {
 
     return (
         <div>
-            <PostPageConditions
-                isLoggedIn={isLoggedIn}
-                currentLogStatus={currentLogStatus}
-            />
+            <PostPageConditions isLoggedIn={isLoggedIn} />
         </div>
     );
 };
