@@ -59,7 +59,10 @@ const App = () => {
                             <AllPosts posts={posts} isLoggedIn={isLoggedIn} />
                         }
                     />
-                    <Route path='/posts/new/' element={<NewPost />} />
+                    <Route
+                        path='/posts/new/'
+                        element={<NewPost token={token} />}
+                    />
                 </Routes>
                 {/* <Footer /> */}
             </BrowserRouter>
