@@ -1,8 +1,18 @@
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useParams,
+    useNavigate,
+} from 'react-router-dom';
 
-const NewPost = (props) => {
+const PostUpdate = (props) => {
+    let { id } = useParams();
+    const posts = props.posts;
+    const [currentPost, setCurrentPost] = useState({ title: '' });
     const token = props.token;
     const [postTitle, setPostTitle] = useState('');
     const [postBody, setPostBody] = useState('');
@@ -10,30 +20,47 @@ const NewPost = (props) => {
     const navigate = useNavigate();
     const editorRef = useRef(null);
 
+    useEffect(() => {
+        const getPosts = async () => {
+            try {
+                const res = await fetch('http://localhost:3000/admin/posts');
+                if (res.status !== 200) {
+                }
+                const posts = await res.json();
+                setCurrentPost(posts.find((post) => post._id == id));
+            } catch (err) {}
+        };
+        getPosts();
+    }, []);
+
     const log = () => {
         if (editorRef.current) {
             setPostBody(editorRef.current.getContent());
         }
     };
-    const handleSubmitNewPost = async (e) => {
+
+    const handleUpdatePost = async (e) => {
         e.preventDefault();
         log();
 
         setPostTitle(e.target.title);
 
         try {
-            let res = await fetch('http://localhost:3000/admin/posts/new/', {
-                method: 'POST',
-                body: JSON.stringify({
-                    title: `${postTitle}`,
-                    body: `${postBody}`,
-                }),
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            });
+            let res = await fetch(
+                `http://localhost:3000/admin/posts/${id}/update`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        title: `${postTitle}`,
+                        body: `${postBody}`,
+                    }),
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
             let resJson = await res.json();
 
             if (res.status !== 200) {
@@ -50,12 +77,11 @@ const NewPost = (props) => {
     };
 
     return (
-        ////////
         <div className='flex items-center justify-center min-h-screen bg-gray-100'>
             <div className='px-8 py-6 mt-4 text-left bg-white shadow-lg'>
-                <h1 className='text-3xl font-bold'>Write a New Blog Post</h1>
+                <h1 className='text-3xl font-bold'>Update</h1>
                 <p className='max-w-md'>{message}</p>
-                <form onSubmit={handleSubmitNewPost}>
+                <form onSubmit={handleUpdatePost}>
                     <div className='my-4'>
                         <div>
                             <label className='block text-lg font-bold mt-2'>
@@ -63,8 +89,8 @@ const NewPost = (props) => {
                             </label>
                             <input
                                 type='text'
-                                placeholder='title'
                                 name='title'
+                                // defaultValue={currentPost.title}
                                 onChange={(e) => setPostTitle(e.target.value)}
                                 className='w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-orange-600'
                             ></input>
@@ -76,7 +102,7 @@ const NewPost = (props) => {
                             '4sotskl0ipae1fkhidjiczer00626csy54r5wcsptf8udmdb'
                         }
                         onInit={(evt, editor) => (editorRef.current = editor)}
-                        initialValue='<p>This is the initial content of the editor.</p>'
+                        initialValue={currentPost.body_text}
                         init={{
                             height: 500,
                             menubar: false,
@@ -108,4 +134,4 @@ const NewPost = (props) => {
     );
 };
 
-export default NewPost;
+export default PostUpdate;

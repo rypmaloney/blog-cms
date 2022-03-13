@@ -1,12 +1,13 @@
 import './App.css';
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AllPosts from './components/AllPosts';
 import Login from './components/Login';
 import NewPost from './components/NewPost';
 import SignUp from './components/SignUp';
+import PostUpdate from './components/PostUpdate';
 
 const App = () => {
     const [posts, setPosts] = useState([{}, {}]);
@@ -79,6 +80,11 @@ const App = () => {
                         path='/posts/new/'
                         element={<NewPost token={token} />}
                     />
+
+                    <Route
+                        path='/posts/:id/update/'
+                        element={<PostUpdate posts={posts} token={token} />}
+                    ></Route>
                 </Routes>
                 {/* <Footer /> */}
             </BrowserRouter>
