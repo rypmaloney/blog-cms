@@ -44,6 +44,7 @@ const PostUpdate = (props) => {
         log();
 
         setPostTitle(e.target.title);
+        console.log(postTitle);
 
         try {
             let res = await fetch(
