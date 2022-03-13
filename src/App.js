@@ -33,10 +33,10 @@ const App = () => {
             } catch (err) {}
         };
         getPosts();
-    }, []);
+    }, [message]);
 
     return (
-        <div>
+        <div className='bg-gray-100'>
             <BrowserRouter>
                 {/* <Header count={cartCount} /> */}
                 <Routes>

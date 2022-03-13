@@ -17,6 +17,7 @@ const PostUpdate = (props) => {
     const [postTitle, setPostTitle] = useState('');
     const [postBody, setPostBody] = useState('');
     const [message, setMessage] = useState('');
+    const [postStage, setPostStage] = useState('draft');
     const navigate = useNavigate();
     const editorRef = useRef(null);
 
@@ -27,11 +28,15 @@ const PostUpdate = (props) => {
                 if (res.status !== 200) {
                 }
                 const posts = await res.json();
+
                 setCurrentPost(posts.find((post) => post._id == id));
+                setPostStage(currentPost.stage);
+                setPostTitle(currentPost.title);
+                console.log('rerun');
             } catch (err) {}
         };
         getPosts();
-    }, []);
+    }, [posts]);
 
     const log = () => {
         if (editorRef.current) {
@@ -42,10 +47,7 @@ const PostUpdate = (props) => {
     const handleUpdatePost = async (e) => {
         e.preventDefault();
         log();
-
-        setPostTitle(e.target.title);
-        console.log(postTitle);
-
+        // setPostStage(e.target.stage.value)
         try {
             let res = await fetch(
                 `http://localhost:3000/admin/posts/${id}/update`,
@@ -54,6 +56,7 @@ const PostUpdate = (props) => {
                     body: JSON.stringify({
                         title: `${postTitle}`,
                         body: `${postBody}`,
+                        stage: `${postStage}`,
                     }),
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -66,7 +69,7 @@ const PostUpdate = (props) => {
 
             if (res.status !== 200) {
                 setMessage('Some error occured');
-                console.log(res.json());
+                console.log(resJson);
                 return;
             }
             setMessage('Post saved');
@@ -86,12 +89,40 @@ const PostUpdate = (props) => {
                     <div className='my-4'>
                         <div>
                             <label className='block text-lg font-bold mt-2'>
+                                Post stage:
+                            </label>
+                            <div className='mb-3 xl:w-96'>
+                                <select
+                                    onChange={(e) => {
+                                        setPostStage(e.target.value);
+                                    }}
+                                    className=' block w-24 px-3  py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0'
+                                    aria-label='Default select draft'
+                                    name='stage'
+                                >
+                                    <option
+                                        selected={postStage === 'draft'}
+                                        value='draft'
+                                    >
+                                        Draft
+                                    </option>
+                                    <option
+                                        selected={postStage === 'live'}
+                                        value='live'
+                                    >
+                                        Live
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label className='block text-lg font-bold mt-2'>
                                 Post Title:
                             </label>
                             <input
                                 type='text'
                                 name='title'
-                                // defaultValue={currentPost.title}
+                                defaultValue={currentPost.title}
                                 onChange={(e) => setPostTitle(e.target.value)}
                                 className='w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-orange-600'
                             ></input>
