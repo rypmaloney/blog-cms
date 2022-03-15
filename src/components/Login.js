@@ -46,7 +46,7 @@ const Login = (props) => {
 
     return (
         <div className='flex items-center justify-center min-h-screen bg-gray-100'>
-            <div className='px-8 py-6 mt-4 text-left bg-white shadow-lg'>
+            <div className='px-8 py-6  text-left bg-white shadow-lg'>
                 <h1 className='text-3xl font-bold'>Login to the Blog</h1>
                 <p className='max-w-sm'>{message}</p>
                 <form onSubmit={handleSubmitLogIn}>

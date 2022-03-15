@@ -54,6 +54,7 @@ const NewPost = (props) => {
         ////////
         <div className=''>
             <Aside />
+
             <div className='flex items-center justify-center min-h-screen  md:ml-64 mx-auto'>
                 <div className='px-8 py-6 mt-4 text-left bg-white shadow-lg'>
                     <h1 className='text-3xl font-bold'>
