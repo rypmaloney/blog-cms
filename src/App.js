@@ -42,70 +42,59 @@ const App = () => {
     }, [message]);
 
     return (
-        <div className='bg-gray-200'>
+        <div className='bg-gray-200 py-16'>
             <Header />
-
-            <div className='flex md:flex-row my-16 flex-col mr-16'>
-                <Aside />
-                <div className='md:ml-80 mx-auto'>
-                    <BrowserRouter>
-                        <Routes>
-                            {
-                                <Route
-                                    exact
-                                    path='/'
-                                    element={
-                                        <Login
-                                            setUsername={setUsername}
-                                            setPassword={setPassword}
-                                            username={username}
-                                            password={password}
-                                            isLoggedIn={isLoggedIn}
-                                            setLoggedIn={setLoggedIn}
-                                        />
-                                    }
+            <BrowserRouter>
+                <Routes>
+                    {
+                        <Route
+                            exact
+                            path='/'
+                            element={
+                                <Login
+                                    setUsername={setUsername}
+                                    setPassword={setPassword}
+                                    username={username}
+                                    password={password}
+                                    isLoggedIn={isLoggedIn}
+                                    setLoggedIn={setLoggedIn}
                                 />
                             }
+                        />
+                    }
 
-                            <Route
-                                exact
-                                path='/sign-up/'
-                                element={
-                                    <SignUp
-                                        setUsername={setUsername}
-                                        setPassword={setPassword}
-                                        username={username}
-                                        password={password}
-                                        isLoggedIn={isLoggedIn}
-                                        setLoggedIn={setLoggedIn}
-                                    />
-                                }
+                    <Route
+                        exact
+                        path='/sign-up/'
+                        element={
+                            <SignUp
+                                setUsername={setUsername}
+                                setPassword={setPassword}
+                                username={username}
+                                password={password}
+                                isLoggedIn={isLoggedIn}
+                                setLoggedIn={setLoggedIn}
                             />
-                            <Route
-                                path='/posts/'
-                                element={
-                                    <AllPosts
-                                        posts={posts}
-                                        isLoggedIn={isLoggedIn}
-                                    />
-                                }
-                            />
-                            <Route
-                                path='/posts/new/'
-                                element={<NewPost token={token} />}
-                            />
+                        }
+                    />
+                    <Route
+                        path='/posts/'
+                        element={
+                            <AllPosts posts={posts} isLoggedIn={isLoggedIn} />
+                        }
+                    />
+                    <Route
+                        path='/posts/new/'
+                        element={<NewPost token={token} />}
+                    />
 
-                            <Route
-                                path='/posts/:id/update/'
-                                element={
-                                    <PostUpdate posts={posts} token={token} />
-                                }
-                            ></Route>
-                        </Routes>
-                        {/* <Footer /> */}
-                    </BrowserRouter>
-                </div>
-            </div>
+                    <Route
+                        path='/posts/:id/update/'
+                        element={<PostUpdate posts={posts} token={token} />}
+                    ></Route>
+                </Routes>
+                {/* <Footer /> */}
+            </BrowserRouter>
         </div>
     );
 };
