@@ -26,20 +26,25 @@ const PostUpdate = (props) => {
             try {
                 const res = await fetch('http://localhost:3000/admin/posts');
                 if (res.status !== 200) {
-                }
-                const posts = await res.json();
+                    throw res.status;
+                } else {
+                    const posts = await res.json();
 
-                setCurrentPost(posts.find((post) => post._id == id));
-                setPostStage(currentPost.stage);
-                setPostTitle(currentPost.title);
-                console.log('rerun');
-            } catch (err) {}
+                    setCurrentPost(posts.find((post) => post._id == id));
+                    setPostStage(currentPost.stage);
+                    setPostTitle(currentPost.title);
+                    console.log('rerun');
+                }
+            } catch (err) {
+                console.log(err);
+            }
         };
         getPosts();
     }, [posts]);
 
     const log = () => {
         if (editorRef.current) {
+            console.log(editorRef.current);
             setPostBody(editorRef.current.getContent());
         }
     };

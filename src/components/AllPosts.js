@@ -11,7 +11,7 @@ const AllPosts = (props) => {
 
         if (isLoggedIn) {
             return (
-                <div className='flex flex-col items-center justify-center min-h-screen  md:w-3/5 mx-auto'>
+                <div className='flex flex-col items-center justify-center min-h-screen  md:w-4/5 '>
                     {posts.map((post) => {
                         return <Post post={post} key={uniqid()} />;
                     })}
