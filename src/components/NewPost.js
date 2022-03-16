@@ -56,11 +56,12 @@ const NewPost = (props) => {
             <Aside />
 
             <div className='flex items-center justify-center min-h-screen  md:ml-64 mx-auto'>
-                <div className='px-8 py-6 mt-4 text-left bg-white shadow-lg'>
+                <div className='px-8 pt-8 text-left bg-white shadow-lg w-4/5 max-w-6xl md:min-h-screen mt-16 pb-0 '>
                     <h1 className='text-3xl font-bold'>
                         Write a New Blog Post
                     </h1>
                     <p className='max-w-md'>{message}</p>
+
                     <form onSubmit={handleSubmitNewPost}>
                         <div className='my-4'>
                             <div>

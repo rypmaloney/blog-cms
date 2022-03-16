@@ -12,7 +12,7 @@ const AllPosts = (props) => {
 
         if (isLoggedIn) {
             return (
-                <div className='flex md:flex-row my-16 flex-col mr-16'>
+                <div className='flex md:flex-row my-16 flex-col mx-8'>
                     <Aside />
                     <div className='md:ml-80 mx-auto'></div>
                     <div className='flex flex-col items-center justify-center min-h-screen  md:w-4/5 '>

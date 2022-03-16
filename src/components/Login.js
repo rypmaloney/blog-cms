@@ -4,9 +4,7 @@ import React, { useState, useEffect } from 'react';
 
 const Login = (props) => {
     const { setPassword, setUsername, username, password, setLoggedIn } = props;
-    const [message, setMessage] = useState(
-        'If you do not have an account, you can create one using an admin passcode.'
-    );
+    const [message, setMessage] = useState('Login to your account.');
     const navigate = useNavigate();
 
     const handleSubmitLogIn = async (e) => {
@@ -29,16 +27,16 @@ const Login = (props) => {
             let resJson = await res.json();
 
             if (res.status !== 200) {
-                setMessage('Some error occured');
-                console.log(res);
+                setMessage(resJson.info.message);
                 return;
+            } else {
+                setLoggedIn(true);
+                setMessage('Logged in');
+                console.log(resJson.token);
+                localStorage.setItem('token', resJson.token);
+                localStorage.setItem('isLoggedIn', true);
+                navigate('/posts/');
             }
-            setLoggedIn(true);
-            setMessage('Logged in');
-            console.log(resJson.token);
-            localStorage.setItem('token', resJson.token);
-            localStorage.setItem('isLoggedIn', true);
-            navigate('/posts/');
         } catch (err) {
             console.log(err);
         }

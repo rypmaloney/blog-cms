@@ -45,7 +45,6 @@ const PostUpdate = (props) => {
 
     const log = () => {
         if (editorRef.current) {
-            console.log(editorRef.current);
             setPostBody(editorRef.current.getContent());
         }
     };
@@ -53,7 +52,9 @@ const PostUpdate = (props) => {
     const handleUpdatePost = async (e) => {
         e.preventDefault();
         log();
-        // setPostStage(e.target.stage.value)
+        setPostStage(e.target.stage.value);
+        setPostTitle(e.target.title.value);
+        console.log(postTitle);
         try {
             let res = await fetch(
                 `http://localhost:3000/admin/posts/${id}/update`,
@@ -74,12 +75,13 @@ const PostUpdate = (props) => {
             let resJson = await res.json();
 
             if (res.status !== 200) {
-                setMessage('Some error occured');
-                console.log(resJson);
+                setMessage(resJson.errors[0].msg);
+
                 return;
             }
             setMessage('Post saved');
             navigate('/posts/');
+
             console.log(resJson);
         } catch (err) {
             console.log(err);
@@ -91,7 +93,7 @@ const PostUpdate = (props) => {
             <Aside />
 
             <div className='flex items-center justify-center min-h-screen my-20 md:ml-64 mx-auto'>
-                <div className='px-8 py-6 mt-4 text-left bg-white shadow-lg'>
+                <div className='px-8 py-6  text-left bg-white shadow-lg  w-4/5 max-w-6xl md:min-h-screen mt-16 pb-0 '>
                     <h1 className='text-3xl font-bold'>Update</h1>
                     <p className='max-w-md'>{message}</p>
                     <form onSubmit={handleUpdatePost}>
@@ -132,9 +134,9 @@ const PostUpdate = (props) => {
                                     type='text'
                                     name='title'
                                     defaultValue={currentPost.title}
-                                    onChange={(e) =>
-                                        setPostTitle(e.target.value)
-                                    }
+                                    onChange={(e) => {
+                                        setPostTitle(e.target.value);
+                                    }}
                                     className='w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-orange-600'
                                 ></input>
                             </div>

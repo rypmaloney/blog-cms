@@ -29,21 +29,24 @@ const App = () => {
                 const res = await fetch('http://localhost:3000/admin/posts');
                 if (res.status !== 200) {
                     console.log(res.status);
+                    setMessage(res.info.message);
+                    setPosts(null);
                 } else {
                     const posts = await res.json();
                     setPosts(posts);
-                    console.log(posts);
                 }
             } catch (err) {
-                console.log(err);
+                setMessage(err);
             }
         };
+
         getPosts();
-    }, [message]);
+    }, []);
 
     return (
         <div className='bg-gray-200 py-16'>
             <Header />
+            <p className='text-red-500'>{message}</p>
             <BrowserRouter>
                 <Routes>
                     {
