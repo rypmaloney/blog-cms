@@ -12,7 +12,7 @@ import Aside from './components/Aside';
 import Header from './components/Header';
 
 const App = () => {
-    const [posts, setPosts] = useState([{}, {}]);
+    const [posts, setPosts] = useState(false);
 
     //Login stuff
     const [username, setUsername] = useState('');
@@ -23,30 +23,34 @@ const App = () => {
     );
     const [token, setToken] = useState(localStorage.getItem('token'));
 
-    useEffect(() => {
-        const getPosts = async () => {
-            try {
-                const res = await fetch('http://localhost:3000/admin/posts');
-                if (res.status !== 200) {
-                    console.log(res.status);
-                    setMessage(res.info.message);
-                    setPosts(null);
-                } else {
-                    const posts = await res.json();
-                    setPosts(posts);
-                }
-            } catch (err) {
-                setMessage(err);
+    const getPosts = async () => {
+        try {
+            const res = await fetch('http://localhost:3000/admin/posts');
+            if (res.status !== 200) {
+                console.log(res.status);
+                setMessage(res);
+                setPosts(false);
+            } else {
+                const posts = await res.json();
+                setPosts(posts);
             }
-        };
+        } catch (err) {
+            setPosts(false);
+            setMessage(err);
+        }
+    };
 
+    useEffect(() => {
         getPosts();
+
+        //dependency is post.length. This means the run happens twice,
+        //allowing the Posts to pass to child components without having to fetch themselves.
+        //If you don't render twice, child components like PostUpdate render ~simultaneously and only hold the initial value for posts, which is false
     }, []);
 
     return (
         <div className='bg-gray-200 py-16'>
             <Header />
-            <p className='text-red-500'>{message}</p>
             <BrowserRouter>
                 <Routes>
                     {
@@ -88,12 +92,19 @@ const App = () => {
                     />
                     <Route
                         path='/posts/new/'
-                        element={<NewPost token={token} />}
+                        element={<NewPost token={token} getPosts={getPosts} />}
                     />
 
                     <Route
                         path='/posts/:id/update/'
-                        element={<PostUpdate posts={posts} token={token} />}
+                        element={
+                            <PostUpdate
+                                posts={posts}
+                                setPosts={setPosts}
+                                token={token}
+                                getPosts={getPosts}
+                            />
+                        }
                     ></Route>
                 </Routes>
                 {/* <Footer /> */}

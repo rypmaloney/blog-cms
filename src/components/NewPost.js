@@ -4,7 +4,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import Aside from './Aside';
 
 const NewPost = (props) => {
-    const token = props.token;
+    const { token, getPosts } = props;
     const [postTitle, setPostTitle] = useState('');
     const [postBody, setPostBody] = useState('');
     const [message, setMessage] = useState('');
@@ -43,6 +43,7 @@ const NewPost = (props) => {
                 return;
             }
             setMessage('Post saved');
+            getPosts();
             navigate('/posts/');
             console.log(resJson);
         } catch (err) {

@@ -6,8 +6,8 @@ const Post = (props) => {
     const [date, setDate] = useState('today');
 
     return (
-        <div className='px-2 py-6 m-4'>
-            <div className='px-4 py-8 md:p-10 text-left bg-white shadow-lg md:w-4/5 min-w-full'>
+        <div className='px-2 py-6 m-4 md:w-4/5 '>
+            <div className='px-4 py-8 md:p-10 text-left bg-white shadow-lg '>
                 <h2 className='text-2xl font-extrabold text-amber-700'>
                     {post.title} -{' '}
                     <span className='text-slate-600 text-lg'>{post.stage}</span>

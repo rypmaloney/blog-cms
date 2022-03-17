@@ -12,8 +12,8 @@ import Aside from './Aside';
 
 const PostUpdate = (props) => {
     let { id } = useParams();
-    const posts = props.posts;
-    const [currentPost, setCurrentPost] = useState({ title: '' });
+    const { posts, setPosts, getPosts } = props;
+    const [currentPost, setCurrentPost] = useState({});
     const token = props.token;
     const [postTitle, setPostTitle] = useState('');
     const [postBody, setPostBody] = useState('');
@@ -23,38 +23,37 @@ const PostUpdate = (props) => {
     const editorRef = useRef(null);
 
     useEffect(() => {
-        const getPosts = async () => {
-            try {
-                const res = await fetch('http://localhost:3000/admin/posts');
-                if (res.status !== 200) {
-                    throw res.status;
-                } else {
-                    const posts = await res.json();
-
-                    setCurrentPost(posts.find((post) => post._id == id));
-                    setPostStage(currentPost.stage);
-                    setPostTitle(currentPost.title);
-                    console.log('rerun');
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        getPosts();
+        //IF there are posts pulled from the async function in App.js
+        // this accounts for the time it takes for the async function to be resolved
+        if (posts === false) {
+            //There are no posts so something has gone wrong
+            setMessage("I'm haiving trouble fetching posts...");
+        } else {
+            //set the initial message and find/set the relevant post
+            setMessage('Edit and save.');
+            //Need the extra step of defining thisPost variable -- setState is async
+            const thisPost = posts.find((post) => post._id == id);
+            setCurrentPost(thisPost);
+            setPostStage(thisPost.stage);
+            setPostTitle(thisPost.title);
+        }
+        //Post is a dependency so the relevant post info is set after the fetch completes
     }, [posts]);
 
+    //Pulls the content from the TinyMCE editor and saves it in state before submitting to API
     const log = () => {
         if (editorRef.current) {
             setPostBody(editorRef.current.getContent());
         }
     };
 
+    //Post function to update specific post
     const handleUpdatePost = async (e) => {
         e.preventDefault();
         log();
         setPostStage(e.target.stage.value);
+        //console.log(e.target.stage.value, postStage, currentPost.stage);
         setPostTitle(e.target.title.value);
-        console.log(postTitle);
         try {
             let res = await fetch(
                 `http://localhost:3000/admin/posts/${id}/update`,
@@ -75,15 +74,19 @@ const PostUpdate = (props) => {
             let resJson = await res.json();
 
             if (res.status !== 200) {
-                setMessage(resJson.errors[0].msg);
-
+                // setMessage(resJson);
                 return;
             }
             setMessage('Post saved');
+            //Call getPosts to refetch with new info saved
+            getPosts();
             navigate('/posts/');
 
             console.log(resJson);
         } catch (err) {
+            setMessage(
+                'There seems to be a problem posting that information. Are you filled out everything correctly?'
+            );
             console.log(err);
         }
     };
@@ -91,7 +94,7 @@ const PostUpdate = (props) => {
     return (
         <div className=''>
             <Aside />
-
+            {}
             <div className='flex items-center justify-center min-h-screen my-20 md:ml-64 mx-auto'>
                 <div className='px-8 py-6  text-left bg-white shadow-lg  w-4/5 max-w-6xl md:min-h-screen mt-16 pb-0 '>
                     <h1 className='text-3xl font-bold'>Update</h1>
@@ -107,22 +110,13 @@ const PostUpdate = (props) => {
                                         onChange={(e) => {
                                             setPostStage(e.target.value);
                                         }}
+                                        value={postStage}
                                         className=' block w-24 px-3  py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0'
                                         aria-label='Default select draft'
                                         name='stage'
                                     >
-                                        <option
-                                            selected={postStage === 'draft'}
-                                            value='draft'
-                                        >
-                                            Draft
-                                        </option>
-                                        <option
-                                            selected={postStage === 'live'}
-                                            value='live'
-                                        >
-                                            Live
-                                        </option>
+                                        <option value='live'>live</option>
+                                        <option value='draft'>draft</option>
                                     </select>
                                 </div>
                             </div>
