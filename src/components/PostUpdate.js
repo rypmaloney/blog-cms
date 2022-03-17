@@ -46,6 +46,40 @@ const PostUpdate = (props) => {
             setPostBody(editorRef.current.getContent());
         }
     };
+    const handleDeletePost = async () => {
+        try {
+            let res = await fetch(
+                `http://localhost:3000/admin/posts/${id}/delete`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        //share logged in JWT token in header
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            if (res.status !== 200) {
+                setMessage('Something has gone wrong.' + res.status);
+                return;
+            }
+
+            let resJson = await res.json();
+            //Call getPosts to refetch with new info saved
+            getPosts();
+            //send back to all posts
+            navigate('/posts/');
+            alert('Post deleted');
+            console.log(resJson);
+        } catch (err) {
+            setMessage(
+                'There seems to be a problem posting that information. Are you filled out everything correctly?'
+            );
+            console.log(err);
+        }
+    };
 
     //Post function to update specific post
     const handleUpdatePost = async (e) => {
@@ -161,14 +195,22 @@ const PostUpdate = (props) => {
                                     'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                             }}
                         />
-
-                        <button
-                            className='px-6 py-2 mt-4 text-white bg-orange-800 rounded-lg hover:bg-orange-900'
-                            type='submit'
-                            onClick={log}
-                        >
-                            Submit
-                        </button>
+                        <div className='flex flex-row justify-between'>
+                            <button
+                                className='px-6 py-2 mt-4 text-white bg-green-800 rounded-lg hover:bg-orange-900 mr-auto'
+                                type='submit'
+                                onClick={log}
+                            >
+                                Submit
+                            </button>
+                            <button
+                                className='px-6 py-2 mt-4 text-white bg-orange-800 rounded-lg hover:bg-orange-900 ml-auto'
+                                type='submit'
+                                onClick={handleDeletePost}
+                            >
+                                Delete post
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
