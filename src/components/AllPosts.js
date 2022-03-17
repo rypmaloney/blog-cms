@@ -23,13 +23,15 @@ const AllPosts = (props) => {
                 );
             } else {
                 return (
-                    <div className='flex md:flex-row my-16 flex-col mr-16'>
+                    <div className=''>
                         <Aside />
-                        <div className='md:ml-80 mx-auto'></div>
-                        <div className='flex flex-col items-center justify-center min-h-screen  md:w-4/5 '>
-                            {posts.map((post) => {
-                                return <Post post={post} key={uniqid()} />;
-                            })}
+                        <div className='flex md:flex-row my-16 flex-col mr-16'>
+                            <div className='md:ml-80 mx-auto'></div>
+                            <div className='flex flex-col items-center justify-center min-h-screen  md:w-4/5 '>
+                                {posts.map((post) => {
+                                    return <Post post={post} key={uniqid()} />;
+                                })}
+                            </div>
                         </div>
                     </div>
                 );
@@ -53,7 +55,6 @@ const AllPosts = (props) => {
 
     return (
         <div>
-            <div className='md:ml-80 mx-auto'></div>
             <PostPageConditions isLoggedIn={isLoggedIn} posts={posts} />
         </div>
     );

@@ -1,5 +1,12 @@
 import Parser from 'html-react-parser';
 import React, { useState, useEffect, useRef } from 'react';
+import {
+    BrowserRouter,
+    Routes,
+    Route,
+    useNavigate,
+    Link,
+} from 'react-router-dom';
 const Post = (props) => {
     const { post } = props;
     const body = post.body_text;
@@ -7,7 +14,7 @@ const Post = (props) => {
 
     return (
         <div className='px-2 py-6 m-4 md:w-4/5 '>
-            <div className='px-4 py-8 md:p-10 text-left bg-white shadow-lg '>
+            <div className='px-4 py-8 md:p-10 text-left bg-white shadow-lg max-w-5xl'>
                 <h2 className='text-2xl font-extrabold text-amber-700'>
                     {post.title} -{' '}
                     <span className='text-slate-600 text-lg'>{post.stage}</span>
@@ -17,12 +24,13 @@ const Post = (props) => {
                     className='my-4'
                     dangerouslySetInnerHTML={{ __html: body }}
                 ></div>
-                <a
+
+                <Link
                     className='text-lg text-orange-600 '
-                    href={`/posts/${post._id}/update`}
+                    to={`/posts/${post._id}/update`}
                 >
                     Edit this post
-                </a>
+                </Link>
             </div>
         </div>
     );

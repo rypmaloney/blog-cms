@@ -9,6 +9,7 @@ import {
     useNavigate,
 } from 'react-router-dom';
 import Aside from './Aside';
+import MCEeditor from './Editor';
 
 const PostUpdate = (props) => {
     let { id } = useParams();
@@ -29,7 +30,6 @@ const PostUpdate = (props) => {
             //There are no posts so something has gone wrong
             setMessage("I'm haiving trouble fetching posts...");
         } else {
-            //set the initial message and find/set the relevant post
             setMessage('Edit and save.');
             //Need the extra step of defining thisPost variable -- setState is async
             const thisPost = posts.find((post) => post._id == id);
@@ -67,9 +67,8 @@ const PostUpdate = (props) => {
             }
 
             let resJson = await res.json();
-            //Call getPosts to refetch with new info saved
+            //Call getPosts to refetch with new info saved - this will cause a rerender
             getPosts();
-            //send back to all posts
             navigate('/posts/');
             alert('Post deleted');
             console.log(resJson);
@@ -86,7 +85,6 @@ const PostUpdate = (props) => {
         e.preventDefault();
         log();
         setPostStage(e.target.stage.value);
-        //console.log(e.target.stage.value, postStage, currentPost.stage);
         setPostTitle(e.target.title.value);
         try {
             let res = await fetch(
@@ -169,33 +167,12 @@ const PostUpdate = (props) => {
                                 ></input>
                             </div>
                         </div>
-
-                        <Editor
-                            apiKey={
-                                '4sotskl0ipae1fkhidjiczer00626csy54r5wcsptf8udmdb'
-                            }
-                            onInit={(evt, editor) =>
-                                (editorRef.current = editor)
-                            }
-                            initialValue={currentPost.body_text}
-                            init={{
-                                height: 500,
-                                menubar: false,
-                                plugins: [
-                                    'advlist autolink lists link image charmap print preview anchor',
-                                    'searchreplace visualblocks code fullscreen',
-                                    'insertdatetime media table paste code help wordcount',
-                                ],
-                                toolbar:
-                                    'undo redo | formatselect | ' +
-                                    'bold italic backcolor | alignleft aligncenter ' +
-                                    'alignright alignjustify | bullist numlist outdent indent | ' +
-                                    'removeformat | help',
-                                content_style:
-                                    'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                            }}
+                        <MCEeditor
+                            initialValue={currentPost.body}
+                            editorRef={editorRef}
                         />
-                        <div className='flex flex-row justify-between'>
+
+                        <div className='flex flex-row justify-between pb-4'>
                             <button
                                 className='px-6 py-2 mt-4 text-white bg-green-800 rounded-lg hover:bg-orange-900 mr-auto'
                                 type='submit'
