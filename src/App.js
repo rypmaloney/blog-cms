@@ -2,14 +2,14 @@ import './App.css';
 
 import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import AllPosts from './components/AllPosts';
-import Login from './components/Login';
-import NewPost from './components/NewPost';
-import SignUp from './components/SignUp';
-import PostUpdate from './components/PostUpdate';
-import Aside from './components/Aside';
-import Header from './components/Header';
+
+import AllPosts from './components/main/AllPosts';
+import Login from './components/main/Login';
+import NewPost from './components/main/NewPost';
+import SignUp from './components/main/SignUp';
+import PostUpdate from './components/main/PostUpdate';
+
+import Header from './components/partials/Header';
 
 const App = () => {
     const [posts, setPosts] = useState(false);

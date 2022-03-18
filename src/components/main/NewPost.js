@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import Aside from './Aside';
-import MCEeditor from './Editor';
+import Aside from '../partials/Aside';
+import MCEeditor from '../partials/Editor';
 
 const NewPost = (props) => {
     const { token, getPosts } = props;
@@ -20,9 +20,6 @@ const NewPost = (props) => {
     const handleSubmitNewPost = async (e) => {
         e.preventDefault();
         log();
-
-        setPostTitle(e.target.title);
-
         try {
             let res = await fetch('http://localhost:3000/admin/posts/new/', {
                 method: 'POST',
@@ -37,7 +34,6 @@ const NewPost = (props) => {
                 },
             });
             let resJson = await res.json();
-
             if (res.status !== 200) {
                 setMessage('Some error occured');
                 console.log(res.json());
@@ -46,8 +42,8 @@ const NewPost = (props) => {
             setMessage('Post saved');
             getPosts();
             navigate('/posts/');
-            console.log(resJson);
         } catch (err) {
+            setMessage('There seems to be problem submitting that.');
             console.log(err);
         }
     };

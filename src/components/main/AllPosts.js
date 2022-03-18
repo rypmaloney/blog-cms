@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import Post from './Post';
+import Post from '../partials/Post';
 import uniqid from 'uniqid';
-import Aside from './Aside';
+import Aside from '../partials/Aside';
 
 const AllPosts = (props) => {
     const { posts, isLoggedIn } = props;

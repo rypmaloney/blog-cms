@@ -8,8 +8,8 @@ import {
     useParams,
     useNavigate,
 } from 'react-router-dom';
-import Aside from './Aside';
-import MCEeditor from './Editor';
+import Aside from '../partials/Aside';
+import MCEeditor from '../partials/Editor';
 
 const PostUpdate = (props) => {
     let { id } = useParams();
@@ -70,12 +70,9 @@ const PostUpdate = (props) => {
             //Call getPosts to refetch with new info saved - this will cause a rerender
             getPosts();
             navigate('/posts/');
-            alert('Post deleted');
-            console.log(resJson);
+            alert(resJson.message);
         } catch (err) {
-            setMessage(
-                'There seems to be a problem posting that information. Are you filled out everything correctly?'
-            );
+            setMessage();
             console.log(err);
         }
     };
@@ -113,8 +110,6 @@ const PostUpdate = (props) => {
             //Call getPosts to refetch with new info saved
             getPosts();
             navigate('/posts/');
-
-            console.log(resJson);
         } catch (err) {
             setMessage(
                 'There seems to be a problem posting that information. Are you filled out everything correctly?'
@@ -126,7 +121,6 @@ const PostUpdate = (props) => {
     return (
         <div className=''>
             <Aside />
-            {}
             <div className='flex items-center justify-center min-h-screen my-20 md:ml-64 mx-auto'>
                 <div className='px-8 py-6  text-left bg-white shadow-lg  w-4/5 max-w-6xl md:min-h-screen mt-16 pb-0 '>
                     <h1 className='text-3xl font-bold'>Update</h1>
