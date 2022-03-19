@@ -35,6 +35,7 @@ const PostUpdate = (props) => {
             //Need the extra step of defining thisPost variable -- setState is async
             const thisPost = posts.find((post) => post._id == id);
             setCurrentPost(thisPost);
+            setPostBody(thisPost.body_text);
             setPostStage(thisPost.stage);
             setPostTitle(thisPost.title);
         }
@@ -153,15 +154,16 @@ const PostUpdate = (props) => {
                                     </select>
                                 </div>
                             </div>
-                            <div>
-                                <label className='block text-lg font-bold mt-2'>
-                                    Pinned?:
-                                    <input
-                                        type='checkbox'
-                                        value={isPostPinned}
-                                        onChange={handPinnnedChange}
-                                    />
+                            <div className='flex flex-row '>
+                                <label className='block text-lg font-bold'>
+                                    Pin:
                                 </label>
+                                <input
+                                    className='mt-2 ml-2'
+                                    type='checkbox'
+                                    value={isPostPinned}
+                                    onChange={handPinnnedChange}
+                                />
                             </div>
                             <div>
                                 <label className='block text-lg font-bold mt-2'>
@@ -179,7 +181,7 @@ const PostUpdate = (props) => {
                             </div>
                         </div>
                         <MCEeditor
-                            initialValue={currentPost.body}
+                            initialValue={postBody}
                             editorRef={editorRef}
                         />
 
