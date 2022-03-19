@@ -20,6 +20,7 @@ const Post = (props) => {
                     <span className='text-slate-600 text-lg'>{post.stage}</span>
                 </h2>
                 <p>{new Date(post.date).toLocaleDateString()}</p>
+                {post.pinned ? <p>Pinned</p> : false}
                 <div
                     className='my-4'
                     dangerouslySetInnerHTML={{ __html: body }}

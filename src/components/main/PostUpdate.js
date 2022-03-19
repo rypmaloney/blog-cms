@@ -20,6 +20,7 @@ const PostUpdate = (props) => {
     const [postBody, setPostBody] = useState('');
     const [message, setMessage] = useState('');
     const [postStage, setPostStage] = useState('draft');
+    const [isPostPinned, setIsPostPinned] = useState(false);
     const navigate = useNavigate();
     const editorRef = useRef(null);
 
@@ -46,6 +47,11 @@ const PostUpdate = (props) => {
             setPostBody(editorRef.current.getContent());
         }
     };
+
+    const handPinnnedChange = () => {
+        setIsPostPinned(!isPostPinned);
+    };
+
     const handleDeletePost = async () => {
         try {
             let res = await fetch(
@@ -92,6 +98,7 @@ const PostUpdate = (props) => {
                         title: `${postTitle}`,
                         body: `${postBody}`,
                         stage: `${postStage}`,
+                        pinned: isPostPinned,
                     }),
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -145,6 +152,16 @@ const PostUpdate = (props) => {
                                         <option value='draft'>draft</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div>
+                                <label className='block text-lg font-bold mt-2'>
+                                    Pinned?:
+                                    <input
+                                        type='checkbox'
+                                        value={isPostPinned}
+                                        onChange={handPinnnedChange}
+                                    />
+                                </label>
                             </div>
                             <div>
                                 <label className='block text-lg font-bold mt-2'>
