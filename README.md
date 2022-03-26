@@ -21,5 +21,5 @@ This project is broken in to three parts.
 ## Editing an individual post
 ![Update post page](/public/images/update.png?raw=true )
 
-## Sign up!
-[Sign up page](/public/images/create.png?raw=true )
+## Sign up
+![Sign up page](/public/images/create.png?raw=true )
