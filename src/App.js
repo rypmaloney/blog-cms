@@ -29,7 +29,9 @@ const App = () => {
 
     const getPosts = async () => {
         try {
-            const res = await fetch('http://localhost:3000/admin/posts');
+            const res = await fetch(
+                'https://obscure-wildwood-18149.herokuapp.com/api/posts/ '
+            );
             if (res.status !== 200) {
                 console.log(res.status);
                 setMessage(res);

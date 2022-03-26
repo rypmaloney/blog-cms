@@ -13,17 +13,20 @@ const Login = (props) => {
         setPassword(e.target.password.value);
 
         try {
-            let res = await fetch('http://localhost:3000/admin/log-in/', {
-                method: 'POST',
-                body: JSON.stringify({
-                    username: `${username}`,
-                    password: `${password}`,
-                }),
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            });
+            let res = await fetch(
+                'https://obscure-wildwood-18149.herokuapp.com/admin/log-in/',
+                {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: `${username}`,
+                        password: `${password}`,
+                    }),
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
             let resJson = await res.json();
 
             if (res.status !== 200) {
