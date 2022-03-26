@@ -31,20 +31,20 @@ const Aside = () => {
                         </a>
                     </li>
                     <li className=''>
-                        <a
-                            href='/'
-                            className='flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-200'
+                        <Link
+                            className='flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-300 '
+                            to='/'
                         >
-                            Login
-                        </a>
+                            Log In
+                        </Link>
                     </li>
                     <li className=''>
-                        <a
-                            href='/sign-up/'
-                            className='flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-200'
+                        <Link
+                            className='flex items-center p-2 text-base font-normal text-gray-900 rounded-lg  hover:bg-gray-300 '
+                            to='/sign-up/'
                         >
-                            SignUp
-                        </a>
+                            Sign Up
+                        </Link>
                     </li>
                 </ul>
             </div>

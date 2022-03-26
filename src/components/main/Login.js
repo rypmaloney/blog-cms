@@ -35,7 +35,7 @@ const Login = (props) => {
             } else {
                 setLoggedIn(true);
                 setMessage('Logged in');
-                console.log(resJson.token);
+
                 localStorage.setItem('token', resJson.token);
                 localStorage.setItem('isLoggedIn', true);
                 navigate('/posts/');
