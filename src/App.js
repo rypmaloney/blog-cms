@@ -30,7 +30,7 @@ const App = () => {
     const getPosts = async () => {
         try {
             const res = await fetch(
-                'https://obscure-wildwood-18149.herokuapp.com/api/posts/ '
+                'https://obscure-wildwood-18149.herokuapp.com/admin/posts/ '
             );
             if (res.status !== 200) {
                 console.log(res.status);
