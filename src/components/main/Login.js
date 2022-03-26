@@ -81,12 +81,12 @@ const Login = (props) => {
                             <button className='px-6 py-2 mt-4 text-white bg-orange-800 rounded-lg hover:bg-orange-900'>
                                 Login
                             </button>
-                            <a
-                                href='/sign-up/'
+                            <Link
                                 className='text-sm text-orange-600 hover:underline'
+                                to='/sign-up/'
                             >
                                 Create an account
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </form>

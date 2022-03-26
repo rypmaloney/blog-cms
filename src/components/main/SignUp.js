@@ -111,12 +111,12 @@ const SignUp = (props) => {
                             <button className='px-6 py-2 mt-4 text-white bg-orange-800 rounded-lg hover:bg-orange-900'>
                                 Create Account
                             </button>
-                            <a
-                                href='/'
+                            <Link
                                 className='text-sm text-orange-600 hover:underline'
+                                to='/'
                             >
-                                Have an account already? log in.
-                            </a>
+                                Have an account? Log in.
+                            </Link>
                         </div>
                     </div>
                 </form>
