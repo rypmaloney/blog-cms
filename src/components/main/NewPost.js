@@ -20,18 +20,21 @@ const NewPost = (props) => {
         e.preventDefault();
         log();
         try {
-            let res = await fetch('http://localhost:3000/admin/posts/new/', {
-                method: 'POST',
-                body: JSON.stringify({
-                    title: `${postTitle}`,
-                    body: `${postBody}`,
-                }),
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            });
+            let res = await fetch(
+                'https://obscure-wildwood-18149.herokuapp.com/admin/posts/new/',
+                {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        title: `${postTitle}`,
+                        body: `${postBody}`,
+                    }),
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
             let resJson = await res.json();
             //Handle errors
             if (res.status !== 200) {

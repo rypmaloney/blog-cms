@@ -53,7 +53,7 @@ const PostUpdate = (props) => {
     const handleDeletePost = async () => {
         try {
             let res = await fetch(
-                `http://localhost:3000/admin/posts/${id}/delete`,
+                `https://obscure-wildwood-18149.herokuapp.com/admin/posts/${id}/delete`,
                 {
                     method: 'DELETE',
                     headers: {
