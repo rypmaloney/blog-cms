@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const SignUp = (props) => {
     const { setPassword, setUsername, username, password, setLoggedIn } = props;

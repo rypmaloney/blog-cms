@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
+
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
     useParams,
     useNavigate,
 } from 'react-router-dom';
@@ -89,14 +86,15 @@ const PostUpdate = (props) => {
         e.preventDefault();
         log();
         setPostStage(e.target.stage.value);
-        setPostTitle(e.target.title.value);
+
+        //setPostTitle(e.target.title.value);
         try {
             let res = await fetch(
                 `http://localhost:3000/admin/posts/${id}/update`,
                 {
                     method: 'POST',
                     body: JSON.stringify({
-                        title: `${postTitle}`,
+                        title: `${e.target.title.value}`,
                         body: `${postBody}`,
                         stage: `${postStage}`,
                         pinned: isPostPinned,
@@ -111,7 +109,13 @@ const PostUpdate = (props) => {
             let resJson = await res.json();
 
             if (res.status !== 200) {
-                // setMessage(resJson);
+                let errors = '';
+                resJson.errors.forEach((error) => {
+                    if (error.msg) {
+                        errors += `${error.msg} `;
+                    }
+                });
+                setMessage(errors);
                 return;
             }
             setMessage('Post saved');

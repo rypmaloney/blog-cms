@@ -1,5 +1,3 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
 import Post from '../partials/Post';
 import uniqid from 'uniqid';
 import Aside from '../partials/Aside';
@@ -25,7 +23,7 @@ const AllPosts = (props) => {
                 return (
                     <div className=''>
                         <Aside />
-                        <div className='flex md:flex-row my-16 flex-col mr-16'>
+                        <div className='flex md:flex-row my-16 flex-col md:mr-16'>
                             <div className='md:ml-80 mx-auto'></div>
                             <div className='flex flex-col items-center justify-center min-h-screen  md:w-4/5 '>
                                 {posts.map((post) => {
@@ -43,7 +41,7 @@ const AllPosts = (props) => {
                 <div className='min-h-screen p-14'>
                     <p>
                         Please,{' '}
-                        <a className='text-orange-600' href='/log-in/'>
+                        <a className='text-orange-600' href='/'>
                             log in
                         </a>{' '}
                         to edit and create posts.

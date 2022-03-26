@@ -1,6 +1,5 @@
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useRef } from 'react';
-import { Editor } from '@tinymce/tinymce-react';
 import Aside from '../partials/Aside';
 import MCEeditor from '../partials/Editor';
 
@@ -34,12 +33,18 @@ const NewPost = (props) => {
                 },
             });
             let resJson = await res.json();
+            //Handle errors
             if (res.status !== 200) {
-                setMessage('Some error occured');
-                console.log(res.json());
+                let errors = '';
+                resJson.errors.forEach((error) => {
+                    if (error.msg) {
+                        errors += `${error.msg} `;
+                    }
+                });
+                setMessage(errors);
                 return;
             }
-            setMessage('Post saved');
+            //Save post
             getPosts();
             navigate('/posts/');
         } catch (err) {
