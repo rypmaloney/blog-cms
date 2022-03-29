@@ -48,10 +48,6 @@ const App = () => {
 
     useEffect(() => {
         getPosts();
-
-        //dependency is post.length. This means the run happens twice,
-        //allowing the Posts to pass to child components without having to fetch themselves.
-        //If you don't render twice, child components like PostUpdate render ~simultaneously and only hold the initial value for posts, which is false
     }, []);
 
     return (
@@ -111,7 +107,6 @@ const App = () => {
                     }
                 ></Route>
             </Routes>
-            {/* <Footer /> */}
         </div>
     );
 };
